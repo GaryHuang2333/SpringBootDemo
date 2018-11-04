@@ -1,0 +1,11 @@
+server:
+  port: 8083
+  servlet:
+    context-path: /sm
+
+projectName: springbootProd
+
+staff:
+  name: rose
+  age: 28
+  gender: female

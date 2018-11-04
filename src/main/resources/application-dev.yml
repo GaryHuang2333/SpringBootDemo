@@ -1,0 +1,11 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /sm
+
+projectName: springbootTest
+
+staff:
+  name: jack
+  age: 28
+  gender: male
