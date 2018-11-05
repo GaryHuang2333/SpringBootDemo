@@ -1,9 +1,11 @@
-package com.gary.staffmanagement;
+package com.gary.staffmanagement.domain;
 
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 @Entity
 public class Staff {
@@ -14,6 +16,9 @@ public class Staff {
 
     private String staffNo;
     private String name;
+
+    @Min(value = 18, message = "minimum age is 18 !")
+    @Max(value = 60, message = "maximum age is 18")
     private Integer age;
     private String gender;
     private String department;
@@ -84,5 +89,18 @@ public class Staff {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public String toString() {
+        return "Staff{" +
+                "id=" + id +
+                ", staffNo='" + staffNo + '\'' +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", gender='" + gender + '\'' +
+                ", department='" + department + '\'' +
+                ", comment='" + comment + '\'' +
+                '}';
     }
 }

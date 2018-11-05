@@ -1,5 +1,7 @@
-package com.gary.staffmanagement;
+package com.gary.staffmanagement.service;
 
+import com.gary.staffmanagement.domain.Staff;
+import com.gary.staffmanagement.repository.StaffRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

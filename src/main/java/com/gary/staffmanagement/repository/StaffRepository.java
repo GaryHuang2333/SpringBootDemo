@@ -1,5 +1,6 @@
-package com.gary.staffmanagement;
+package com.gary.staffmanagement.repository;
 
+import com.gary.staffmanagement.domain.Staff;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

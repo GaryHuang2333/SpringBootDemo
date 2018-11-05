@@ -1,8 +1,13 @@
-package com.gary.staffmanagement;
+package com.gary.staffmanagement.controller;
 
+import com.gary.staffmanagement.domain.Staff;
+import com.gary.staffmanagement.repository.StaffRepository;
+import com.gary.staffmanagement.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,39 +22,41 @@ public class StaffController {
 
     //获取全员工类表
     @GetMapping("/staffs")
-    public List<Staff> findAll(){
+    public List<Staff> getAll(){
         return staffRepository.findAll();
     }
 
     //根据id获取一个员工
     @GetMapping("/staffs/id")
-    public Staff findById(@RequestParam("id") Integer id){
+    public Staff getById(@RequestParam("id") Integer id){
         Optional<Staff> opt = staffRepository.findById(id);
         return opt.orElse(new Staff());
     }
 
     //根据名字获取员工列表
     @GetMapping("/staffs/name")
-    public List<Staff> findByName(@RequestParam("name") String name){
+    public List<Staff> getByName(@RequestParam("name") String name){
         return staffRepository.findByName(name);
     }
 
     //根据年龄和部门获取员工类表
     @GetMapping("/staffs/age_department")
-    public List<Staff> findByAgeNDepartment(@RequestParam("age") Integer age, @RequestParam("department") String  department){
+    public List<Staff> getByAgeNDepartment(@RequestParam("age") Integer age, @RequestParam("department") String  department){
         return staffRepository.findByAgeAndDepartment(age,department);
     }
 
     //新建一个员工
     @PostMapping("/staffs")
-    public Staff createStaff(@RequestParam("name") String name,
-                       @RequestParam("age") Integer age,
-                       @RequestParam("gender") String gender,
-                       @RequestParam("department") String department,
-                       @RequestParam("staffNo") String staffNo){
-        Staff staff = new Staff(staffNo, name, age, gender, department);
+    public Staff createStaff(@Valid Staff staff, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            System.out.println(bindingResult.getFieldError().getDefaultMessage());
+            return null;
+        }
+
         return staffRepository.save(staff);
     }
+
+
 
     //新建多个员工
     @PostMapping("/staffs/multiple")
