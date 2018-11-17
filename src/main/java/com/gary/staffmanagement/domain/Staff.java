@@ -1,6 +1,7 @@
 package com.gary.staffmanagement.domain;
 
 
+import com.gary.staffmanagement.constants.StaffConstant;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,9 +18,10 @@ public class Staff {
     private String staffNo;
     private String name;
 
-    @Min(value = 18, message = "minimum age is 18 !")
-    @Max(value = 60, message = "maximum age is 18")
+    @Min(value = 18, message = StaffConstant.RESULT_MESSAGE_MIN_AGE)
+    @Max(value = 60, message = StaffConstant.RESULT_MESSAGE_MAX_AGE)
     private Integer age;
+
     private String gender;
     private String department;
     private String comment;

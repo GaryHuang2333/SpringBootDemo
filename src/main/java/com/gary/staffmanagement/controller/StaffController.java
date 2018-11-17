@@ -2,6 +2,7 @@ package com.gary.staffmanagement.controller;
 
 import com.gary.staffmanagement.domain.Staff;
 import com.gary.staffmanagement.repository.StaffRepository;
+import com.gary.staffmanagement.domain.Result;
 import com.gary.staffmanagement.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class StaffController {
@@ -22,38 +22,32 @@ public class StaffController {
 
     //获取全员工类表
     @GetMapping("/staffs")
-    public List<Staff> getAll(){
-        return staffRepository.findAll();
+    public Result getAll(){
+        return staffService.findAll();
     }
 
-    //根据id获取一个员工
+    //根据id获取一个员工 http://localhost:8082/sm/staffs/id?id=70
     @GetMapping("/staffs/id")
-    public Staff getById(@RequestParam("id") Integer id){
-        Optional<Staff> opt = staffRepository.findById(id);
-        return opt.orElse(new Staff());
+    public Result getById(@RequestParam("id") Integer id){
+        return staffService.findById(id);
     }
 
     //根据名字获取员工列表
     @GetMapping("/staffs/name")
-    public List<Staff> getByName(@RequestParam("name") String name){
-        return staffRepository.findByName(name);
+    public Result getByName(@RequestParam("name") String name){
+        return staffService.findByName(name);
     }
 
     //根据年龄和部门获取员工类表
     @GetMapping("/staffs/age_department")
-    public List<Staff> getByAgeNDepartment(@RequestParam("age") Integer age, @RequestParam("department") String  department){
-        return staffRepository.findByAgeAndDepartment(age,department);
+    public Result getByAgeNDepartment(@RequestParam("age") Integer age, @RequestParam("department") String  department){
+        return staffService.findByAgeAndDepartment(age,department);
     }
 
     //新建一个员工
     @PostMapping("/staffs")
-    public Staff createStaff(@Valid Staff staff, BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            System.out.println(bindingResult.getFieldError().getDefaultMessage());
-            return null;
-        }
-
-        return staffRepository.save(staff);
+    public Result createStaff(@Valid Staff staff, BindingResult bindingResult){
+        return staffService.saveStaff(staff,bindingResult);
     }
 
 
@@ -92,6 +86,11 @@ public class StaffController {
         staff.setId(id);
         return staffRepository.save(staff);
 
+    }
+
+    @PutMapping("/staffs/ageById")
+    public  Result updateStaffAgeById(@RequestParam("id") Integer id, @RequestParam("age") Integer age) throws Exception{
+        return staffService.saveAgeById(id,age);
     }
 
     //根据部门更新多个员工

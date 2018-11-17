@@ -58,7 +58,7 @@
 
         <!-- https://mvnrepository.com/artifact/aspectj/aspectjrt -->
         <dependency>
-            <groupId>aspectj</groupId>
+            <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
         </dependency>
 
